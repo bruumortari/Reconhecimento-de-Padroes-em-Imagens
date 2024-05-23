@@ -1,0 +1,5 @@
+<dependency>
+    <groupId>net.imagej</groupId>
+    <artifactId>ij</artifactId>
+    <version>1.53n</version>
+</dependency>

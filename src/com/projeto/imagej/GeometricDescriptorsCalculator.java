@@ -1,19 +1,24 @@
+import org.opencv.core.*;
+import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.List;
-import org.opencv.core.*;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
+import ij.IJ;
 
-public class GeometricDescriptors {
-    public static void main(String[] args) {
-        // Carregar a imagem
-        Mat image = Imgcodecs.imread("urso.png");
+public class GeometricDescriptorsCalculator {
+    private Mat image;
+    private List<String> results;
 
+    public GeometricDescriptorsCalculator(Mat image) {
+        this.image = image;
+        this.results = new ArrayList<>();
+    }
+
+    public void calculate() {
         // Converter a imagem para escala de cinza
         Mat grayImage = new Mat();
         Imgproc.cvtColor(image, grayImage, Imgproc.COLOR_BGR2GRAY);
 
-        // Binarizar a imagem (opcional, dependendo do que você quer)
+        // Binarizar a imagem
         Mat binaryImage = new Mat();
         Imgproc.threshold(grayImage, binaryImage, 0, 255, Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
 
@@ -26,7 +31,7 @@ public class GeometricDescriptors {
         for (MatOfPoint contour : contours) {
             // Perímetro
             double perimeter = Imgproc.arcLength(new MatOfPoint2f(contour.toArray()), true);
-            // Área
+            // Area
             double area = Imgproc.contourArea(contour);
             // Retângulo delimitador
             RotatedRect boundingBox = Imgproc.minAreaRect(new MatOfPoint2f(contour.toArray()));
@@ -41,15 +46,21 @@ public class GeometricDescriptors {
             // Razão de raio
             double aspectRatio = majorAxis / minorAxis;
 
-            // Exibir os resultados
-            System.out.println("Perímetro: " + perimeter);
-            System.out.println("Área: " + area);
-            System.out.println("Menor eixo: " + minorAxis);
-            System.out.println("Maior eixo: " + majorAxis);
-            System.out.println("Diâmetro efetivo: " + effectiveDiameter);
-            System.out.println("Circularidade: " + circularity);
-            System.out.println("Arredondamento: " + roundness);
-            System.out.println("Razão de raio: " + aspectRatio);
+            // Adicionar resultados à lista
+            results.add(String.format("Perimetro: %.2f", perimeter));
+            results.add(String.format("Area: %.2f", area));
+            results.add(String.format("Menor eixo: %.2f", minorAxis));
+            results.add(String.format("Maior eixo: %.2f", majorAxis));
+            results.add(String.format("Diametro efetivo: %.2f", effectiveDiameter));
+            results.add(String.format("Circularidade: %.2f", circularity));
+            results.add(String.format("Arredondamento: %.2f", roundness));
+            results.add(String.format("Razao de raio: %.2f", aspectRatio));
+        }
+    }
+
+    public void displayResults() {
+        for (String result : results) {
+            IJ.log(result);
         }
     }
 }
