@@ -12,7 +12,7 @@
         <dependency>
             <groupId>org.openpnp</groupId>
             <artifactId>opencv</artifactId>
-            <version>4.5.1-1</version> <!-- Versão específica do OpenCV -->
+            <version>4.9.0</version> <!-- Versão específica do OpenCV -->
         </dependency>
         <dependency>
             <groupId>net.imagej</groupId>
