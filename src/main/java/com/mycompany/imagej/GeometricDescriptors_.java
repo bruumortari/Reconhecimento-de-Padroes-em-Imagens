@@ -1,3 +1,4 @@
+package com.mycompany.imagej;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.plugin.filter.PlugInFilter;

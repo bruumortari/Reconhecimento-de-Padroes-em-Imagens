@@ -1,3 +1,4 @@
+package com.mycompany.imagej;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 import ij.gui.Roi;
@@ -100,7 +101,7 @@ public class GeometricDescriptorsCalculator {
         }
 
         return new double[]{minX, minY, maxX, maxY};
-    }
+    } 
 
     public void displayResults() {
         for (String result : results) {
