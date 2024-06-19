@@ -1260,4 +1260,3 @@ public class ImageAccess {
 	}
 
 }
-
