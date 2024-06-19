@@ -1,4 +1,3 @@
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -25,7 +24,7 @@ public class KNNFinder {
     }
 
     public static Neighbor[] findKNearestNeighbors(double[] refVector, List<double[]> featureVectors, int k, String distanceMetric) {
-        PriorityQueue<Neighbor> queue = new PriorityQueue<>(Comparator.comparingDouble(n -> n.distance)); // garante a ordem dos elementos com base na distância
+        PriorityQueue<Neighbor> queue = new PriorityQueue<>(Comparator.comparingDouble(n -> n.distance));
 
         for (int i = 0; i < featureVectors.size(); i++) {
             double[] featureVector = featureVectors.get(i);
@@ -35,7 +34,7 @@ public class KNNFinder {
 
         Neighbor[] neighbors = new Neighbor[k];
         for (int i = 0; i < k; i++) {
-            neighbors[i] = queue.poll(); // remove o primeiro da fila
+            neighbors[i] = queue.poll();
         }
 
         return neighbors;

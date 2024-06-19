@@ -21,7 +21,6 @@ public class GeometricDescriptors_ implements PlugIn {
         try {
             // Abrir imagem de referência
             openReferenceImage();
-
             if (referenceImage == null) {
                 IJ.showMessage("Error", "Nenhuma imagem foi aberta.");
                 return;
@@ -37,7 +36,7 @@ public class GeometricDescriptors_ implements PlugIn {
             // Extrair descritores da imagem de referência
             double[] refDescriptors = extractReferenceDescriptors();
 
-            // Extrair descritores e caminhos das imagens para cada imagem no diretório
+            // Extrair descritores e caminhos das imagens de busca do diretório selecionado
             List<double[]> featureVectors = new ArrayList<>();
             List<String> imagePaths = new ArrayList<>();
             extractSearchImageDescriptors(searchImagesDir, featureVectors, imagePaths);
@@ -45,7 +44,7 @@ public class GeometricDescriptors_ implements PlugIn {
             // Salvar descritores em um arquivo
             saveDescriptorsToFile(refDescriptors, featureVectors, imagePaths);
 
-            // Obter valor de k e métrica de distância do usuário
+            // Obter valor de k vizinhos e métrica de distância do usuário
             int k = Integer.parseInt(IJ.getString("Enter value of k", "3"));
             String distanceMetric = IJ.getString("Enter distance metric (euclidean/manhattan)", "euclidean");
 
@@ -53,7 +52,6 @@ public class GeometricDescriptors_ implements PlugIn {
             KNNFinder.Neighbor[] neighbors = KNNFinder.findKNearestNeighbors(refDescriptors, featureVectors, k,
                     distanceMetric);
 
-            // Exibir resultados
             displayResults(refDescriptors, neighbors, imagePaths);
 
         } catch (Exception e) {
@@ -105,7 +103,7 @@ public class GeometricDescriptors_ implements PlugIn {
         StringBuilder result = new StringBuilder("Reference Vector: " + Arrays.toString(refDescriptors) + "\n");
         result.append("K Nearest Neighbors:\n");
         for (KNNFinder.Neighbor neighbor : neighbors) {
-            int index = neighbor.getIndex(); // Obter índice do vizinho na lista de vetores de características
+            int index = neighbor.getIndex();
             String imageName = imagePaths.get(index); // Obter nome real da imagem correspondente ao vizinho
             double distance = neighbor.getDistance(); // Obter distância do vizinho
             result.append("Image: ").append(imageName).append(", Distance: ").append(distance).append("\n");
